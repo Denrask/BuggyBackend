@@ -1,0 +1,11 @@
+@ImportantBackend_HostAddress = http://localhost:5149
+
+GET {{ImportantBackend_HostAddress}}/TestOperator/
+Accept: application/json
+
+###
+
+GET {{ImportantBackend_HostAddress}}/TestResults/
+Accept: application/json
+
+###
