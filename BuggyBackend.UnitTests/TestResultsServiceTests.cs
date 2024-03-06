@@ -10,7 +10,6 @@ namespace TestAutomation.UnitTests
         [SetUp]
         public void Setup()
         {
-            // Ensure to adjust the connection string to the actual path of the TestAutomation.db file
             _service = new TestResultsService("Data Source=TestAutomation.db;Version=3;");
         }
 
