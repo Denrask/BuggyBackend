@@ -1,0 +1,75 @@
+name: .NET
+
+
+###########################################################################################################
+# DO NOT MODIFY THIS FILE. THIS IS OUT OF SCOPE OF THE ASSIGNMENT!
+###########################################################################################################
+
+
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+  
+  ###########################################################################################################
+  # DO NOT MODIFY THIS FILE. THIS IS OUT OF SCOPE OF THE ASSIGNMENT!
+  ###########################################################################################################
+
+  hash-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Compute hash of Unit Test file
+        id: unit-test-file-hash
+        run: echo "UNITTEST_HASH=$(sha256sum ./BuggyBackend.UnitTests/TestResultsServiceTests.cs | awk '{print $1}')" >> $GITHUB_ENV
+      - name: Check hash of Unit Test file against expected value
+        run: |
+          if [ "${{ env.UNITTEST_HASH }}" != "${{ secrets.UNITTEST_HASH }}" ]; then
+            echo "Unit Test file hash mismatch, action failed."
+            exit 1
+          else
+            echo "Unit Test file hash match, action succeeded."
+          fi
+      - name: Compute hash of Integration Test file
+        id: integration-test-file-hash
+        run: echo "INTEGRATIONTEST_HASH=$(sha256sum ./BuggyBackend.IntegrationTests/TestOperatorIntegrationTests.cs | awk '{print $1}')" >> $GITHUB_ENV
+      - name: Check hash of Integration Test file against expected value
+        run: |
+          if [ "${{ env.INTEGRATIONTEST_HASH }}" != "${{ secrets.INTEGRATIONTEST_HASH }}" ]; then
+            echo "Integration Test file hash mismatch, action failed."
+            exit 1
+          else
+            echo "Integration Test file hash match, action succeeded."
+          fi
+          
+###########################################################################################################
+# DO NOT MODIFY THIS FILE. THIS IS OUT OF SCOPE OF THE ASSIGNMENT!
+###########################################################################################################
+
+
+  build-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false
+          tags: denrask/buggybackend:latest
