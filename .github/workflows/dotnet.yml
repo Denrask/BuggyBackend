@@ -21,3 +21,36 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+
+  hash-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Compute hash of Unit Test file
+        id: unit-test-file-hash
+        run: echo "UNITTEST_HASH=$(sha256sum ./BuggyBackend.UnitTests/TestResultsServiceTests.cs | awk '{print $1}')" >> $GITHUB_ENV
+  
+      - name: Check hash of Unit Test file against expected value
+        run: |
+          if [ "${{ env.UNITTEST_HASH }}" != "${{ secrets.UNITTEST_HASH }}" ]; then
+            echo "Unit Test file hash mismatch, action failed."
+            exit 1
+          else
+            echo "Unit Test file hash match, action succeeded."
+          fi
+  
+      - name: Compute hash of Integration Test file
+        id: integration-test-file-hash
+        run: echo "INTEGRATIONTEST_HASH=$(sha256sum ./BuggyBackend.IntegrationTests/TestOperatorIntegrationTests.cs | awk '{print $1}')" >> $GITHUB_ENV
+  
+      - name: Check hash of Integration Test file against expected value
+        run: |
+          if [ "${{ env.INTEGRATIONTEST_HASH }}" != "${{ secrets.INTEGRATIONTEST_HASH }}" ]; then
+            echo "Integration Test file hash mismatch, action failed."
+            exit 1
+          else
+            echo "Integration Test file hash match, action succeeded."
+          fi
