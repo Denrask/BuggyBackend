@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportantBackend", "ImportantBackend\ImportantBackend.csproj", "{EC820C31-A6EC-428A-A3A1-CE3A40839D8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuggyBackend", "BuggyBackend\BuggyBackend.csproj", "{EC820C31-A6EC-428A-A3A1-CE3A40839D8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportantBackend.Tests", "ImportantBackend.Tests\ImportantBackend.Tests.csproj", "{A99F9F31-BCEC-4A5B-9154-006DF660378C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuggyBackend.UnitTests", "BuggyBackend.UnitTests\BuggyBackend.UnitTests.csproj", "{A99F9F31-BCEC-4A5B-9154-006DF660378C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuggyBackend.IntegrationTests", "BuggyBackend.IntegrationTests\BuggyBackend.IntegrationTests.csproj", "{E7506EFA-C884-4078-A38B-72E65A763270}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A99F9F31-BCEC-4A5B-9154-006DF660378C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A99F9F31-BCEC-4A5B-9154-006DF660378C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A99F9F31-BCEC-4A5B-9154-006DF660378C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7506EFA-C884-4078-A38B-72E65A763270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7506EFA-C884-4078-A38B-72E65A763270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7506EFA-C884-4078-A38B-72E65A763270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7506EFA-C884-4078-A38B-72E65A763270}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
