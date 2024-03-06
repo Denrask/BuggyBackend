@@ -27,7 +27,7 @@ public class BasicTests
         var response = await client.GetAsync(url);
         stopwatch.Stop();
 
-        // Asser
+        // Assert
         response.EnsureSuccessStatusCode(); // Status Code 200-299
         Assert.True(stopwatch.ElapsedMilliseconds <= 1000, "Response time is more than 1 second");
     }
