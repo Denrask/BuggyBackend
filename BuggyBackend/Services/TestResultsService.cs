@@ -1,7 +1,4 @@
-
-using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 
 public class TestResultsService
 {
@@ -19,10 +16,10 @@ public class TestResultsService
         
         var query = $"SELECT * FROM TestResults LIMIT {pageSize + 1} OFFSET {offset}";
 
-        using (var connection = new SQLiteConnection(_connectionString))
+        using (var connection = new SqliteConnection(_connectionString))
         {
             connection.Open();
-            var command = new SQLiteCommand(query, connection);
+            var command = new SqliteCommand(query, connection);
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
