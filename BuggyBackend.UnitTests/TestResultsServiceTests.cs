@@ -10,7 +10,7 @@ namespace TestAutomation.UnitTests
         [SetUp]
         public void Setup()
         {
-            _service = new TestResultsService("Data Source=TestAutomation.db;Version=3;");
+            _service = new TestResultsService("Data Source=TestAutomation.db;");
         }
 
         [Test]

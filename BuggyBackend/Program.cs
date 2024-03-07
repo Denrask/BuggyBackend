@@ -3,7 +3,7 @@ using BuggyBackend.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add database services to the container.
-TestResultsService testResultsService = new("Data Source=TestAutomation.db;Version=3;");
+TestResultsService testResultsService = new("Data Source=TestAutomation.db;");
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
