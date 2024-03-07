@@ -12,7 +12,7 @@ WORKDIR /source
 COPY ["BuggyBackend/BuggyBackend.csproj", "BuggyBackend/"]
 RUN dotnet restore "./BuggyBackend/./BuggyBackend.csproj"
 COPY . .
-WORKDIR "/src/BuggyBackend"
+WORKDIR "/source/BuggyBackend"
 RUN dotnet build "./BuggyBackend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

@@ -1,7 +1,4 @@
-
-using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 
 public class TestResultsService
 {
@@ -10,19 +7,22 @@ public class TestResultsService
     public TestResultsService(string connectionString)
     {
         _connectionString = connectionString;
+        // Add native dependency
     }
 
     public IEnumerable<TestResult> GetTestResults(int page, int pageSize)
     {
+        if (pageSize > 30)
+            throw new ArgumentException("The pageSize should not be above 30.");
         var testResults = new List<TestResult>();
         var offset = (page - 1) * pageSize;
         
-        var query = $"SELECT * FROM TestResults LIMIT {pageSize + 1} OFFSET {offset}";
+        var query = $"SELECT * FROM TestResults LIMIT {pageSize} OFFSET {offset}";
 
-        using (var connection = new SQLiteConnection(_connectionString))
+        using (var connection = new SqliteConnection(_connectionString))
         {
             connection.Open();
-            var command = new SQLiteCommand(query, connection);
+            var command = new SqliteCommand(query, connection);
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
