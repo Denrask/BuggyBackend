@@ -9,13 +9,17 @@ name: .NET
 on: [push]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-unknown]
+        dotnet: [8.0.x]
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: ${{ matrix.dotnet }}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -31,10 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v22
       - name: Compute hash of Unit Test file
         id: unit-test-file-hash
-        run: echo "UNITTEST_HASH=$(sha256sum ./BuggyBackend.UnitTests/TestResultsServiceTests.cs | awk '{print $1}')" >> $GITHUB_ENV
+        run: echo "UNITTEST_HASH=$(sha256sum ./BuggyBackend.UnitTests/TestResultsServiceTests.cs | awk '{print $1}')" >> $GITHUB_ENV    
       - name: Check hash of Unit Test file against expected value
         run: |
           if [ "${{ env.UNITTEST_HASH }}" != "${{ secrets.UNITTEST_HASH }}" ]; then
