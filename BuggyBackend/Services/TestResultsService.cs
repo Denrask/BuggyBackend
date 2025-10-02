@@ -11,10 +11,15 @@ public class TestResultsService
 
     public IEnumerable<TestResult> GetTestResults(int page, int pageSize)
     {
+        if (pageSize > 30)
+        {
+            throw new ArgumentException();
+        }
+
         var testResults = new List<TestResult>();
         var offset = (page - 1) * pageSize;
         
-        var query = $"SELECT * FROM TestResults LIMIT {pageSize + 1} OFFSET {offset}";
+        var query = $"SELECT * FROM TestResults LIMIT {pageSize} OFFSET {offset}";
 
         using (var connection = new SqliteConnection(_connectionString))
         {

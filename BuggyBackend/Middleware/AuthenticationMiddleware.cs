@@ -13,8 +13,8 @@ public class AuthenticationMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        if (context.Request.Path.StartsWithSegments("/testoperator", StringComparison.InvariantCultureIgnoreCase))
-            Thread.Sleep(2000);
+        // if (context.Request.Path.StartsWithSegments("/testoperator", StringComparison.InvariantCultureIgnoreCase))
+        //     Thread.Sleep(2000);
 
         if(true)
             await _next(context);

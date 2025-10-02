@@ -16,6 +16,11 @@ public class TestResultsController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<TestResult>> Get(int page = 1, int pageSize = 10)
     {
+        if (pageSize > 30)
+        {
+            return BadRequest();
+        }
+
         var testResults = _testResultsService.GetTestResults(page, pageSize);
         return Ok(testResults);
     }
